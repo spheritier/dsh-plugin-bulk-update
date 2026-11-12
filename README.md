@@ -71,7 +71,7 @@ pnpm run build
 
 ### Установка
 
-После публикации пакета установите его из CLI DSH:
+Установите его из CLI DSH:
 
 ```sh
 dsh plugin --profile web add dsh-plugin-bulk-update
@@ -125,7 +125,7 @@ pnpm run build
 
 ### 安装
 
-软件包发布后，可通过 DSH CLI 安装：
+通过 DSH CLI 安装：
 
 ```sh
 dsh plugin --profile web add dsh-plugin-bulk-update
@@ -179,7 +179,7 @@ DeepSeek Harness のサイドバープラグインです。インストール済
 
 ### インストール
 
-パッケージ公開後、DSH CLI からインストールできます。
+DSH CLI からインストールしてください。
 
 ```sh
 dsh plugin --profile web add dsh-plugin-bulk-update
