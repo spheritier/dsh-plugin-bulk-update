@@ -1,0 +1,4 @@
+# Adds the updates UI plugin to the DSH composition.
+- insert:
+    - id: dsh-plugin-bulk-update
+      name: dsh-plugin-bulk-update

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Bulk Plugin Updates",
+    "description": "Check installed DSH registry plugins for compatible updates, choose which ones to apply, and update them in sequence."
+  }
+}

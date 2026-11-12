@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Actualizaciones masivas de plugins",
+    "description": "Comprueba si hay actualizaciones compatibles para los plugins de registry de DSH instalados, elige cuáles aplicar y actualízalos en secuencia."
+  }
+}
