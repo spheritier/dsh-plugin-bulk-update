@@ -60,7 +60,7 @@ const COPY: Record<LocaleCode, Copy> = {
     navLabel: 'Updates',
     title: 'Plugin-Updates',
     tooltip: 'Plugin-Updates',
-    description: 'Prüfe Versionen, wähle die gewünschten Pakete aus und starte die Aktualisierung. Geprüft werden Registry-Pakete; Git- und offizielle Pakete sind nicht im standardmäßigen Versionskatalog enthalten.',
+    description: 'Prüfe Versionen, wähle die gewünschten Pakete aus und starte die Aktualisierung. Geprüft werden Registry-Pakete; Git- und offizielle Pakete sind nicht im standardmäßigen Versionskatalog enthalten. Dieser Updater aktualisiert sich nicht selbst; aktualisieren Sie ihn separat über den DSH-Pluginmanager.',
     ready: 'Wähle „Prüfen“, um nach verfügbaren Updates zu suchen.',
     checking: 'Installierte Plugins werden geprüft…',
     check: 'Prüfen',
@@ -78,7 +78,7 @@ const COPY: Record<LocaleCode, Copy> = {
     navLabel: 'Updates',
     title: 'Plugin updates',
     tooltip: 'Plugin updates',
-    description: 'Check versions, select the packages you want, and start the update. Registry packages are checked; Git and official packages are not covered by the standard version catalog.',
+    description: 'Check versions, select the packages you want, and start the update. Registry packages are checked; Git and official packages are not covered by the standard version catalog. This updater skips itself; update it separately in DSH’s plugin manager.',
     ready: 'Select “Check” to look for available updates.',
     checking: 'Checking installed plugins…',
     check: 'Check',
@@ -96,7 +96,7 @@ const COPY: Record<LocaleCode, Copy> = {
     navLabel: 'Actualizaciones',
     title: 'Actualizaciones de plugins',
     tooltip: 'Actualizaciones de plugins',
-    description: 'Comprueba las versiones, selecciona los paquetes que quieras y comienza la actualización. Se comprueban los paquetes de registry; los paquetes de Git y los oficiales no están incluidos en el catálogo de versiones estándar.',
+    description: 'Comprueba las versiones, selecciona los paquetes que quieras y comienza la actualización. Se comprueban los paquetes de registry; los paquetes de Git y los oficiales no están incluidos en el catálogo de versiones estándar. Este actualizador se omite a sí mismo; actualícelo por separado desde el administrador de plugins de DSH.',
     ready: 'Pulsa «Comprobar» para buscar actualizaciones disponibles.',
     checking: 'Comprobando los plugins instalados…',
     check: 'Comprobar',
@@ -114,7 +114,7 @@ const COPY: Record<LocaleCode, Copy> = {
     navLabel: 'Mises à jour',
     title: 'Mises à jour des plugins',
     tooltip: 'Mises à jour des plugins',
-    description: 'Vérifiez les versions, sélectionnez les packages souhaités et lancez la mise à jour. Les packages registry sont vérifiés ; les packages Git et officiels ne figurent pas dans le catalogue standard des versions.',
+    description: 'Vérifiez les versions, sélectionnez les packages souhaités et lancez la mise à jour. Les packages registry sont vérifiés ; les packages Git et officiels ne figurent pas dans le catalogue standard des versions. Cet outil s’exclut lui-même ; mettez-le à jour séparément depuis le gestionnaire de plugins de DSH.',
     ready: 'Sélectionnez « Vérifier » pour rechercher les mises à jour disponibles.',
     checking: 'Vérification des plugins installés…',
     check: 'Vérifier',
@@ -132,7 +132,7 @@ const COPY: Record<LocaleCode, Copy> = {
     navLabel: '更新',
     title: 'プラグインの更新',
     tooltip: 'プラグインの更新',
-    description: 'バージョンを確認し、更新するパッケージを選んで更新を開始します。確認対象は registry パッケージです。Git パッケージと公式パッケージは標準のバージョンカタログの対象外です。',
+    description: 'バージョンを確認し、更新するパッケージを選んで更新を開始します。確認対象は registry パッケージです。Git パッケージと公式パッケージは標準のバージョンカタログの対象外です。この更新プラグイン自体は対象外です。DSH のプラグインマネージャーから個別に更新してください。',
     ready: '「確認」を選択して、利用可能な更新を検索してください。',
     checking: 'インストール済みプラグインを確認しています…',
     check: '確認',
@@ -150,7 +150,7 @@ const COPY: Record<LocaleCode, Copy> = {
     navLabel: 'Atualizações',
     title: 'Atualizações de plugins',
     tooltip: 'Atualizações de plugins',
-    description: 'Verifique as versões, selecione os pacotes desejados e inicie a atualização. São verificados os pacotes de registry; pacotes Git e oficiais não fazem parte do catálogo padrão de versões.',
+    description: 'Verifique as versões, selecione os pacotes desejados e inicie a atualização. São verificados os pacotes de registry; pacotes Git e oficiais não fazem parte do catálogo padrão de versões. Este atualizador ignora a si próprio; atualize-o separadamente no gerenciador de plugins do DSH.',
     ready: 'Selecione «Verificar» para procurar atualizações disponíveis.',
     checking: 'Verificando os plugins instalados…',
     check: 'Verificar',
@@ -168,7 +168,7 @@ const COPY: Record<LocaleCode, Copy> = {
     navLabel: 'Обновления',
     title: 'Обновления плагинов',
     tooltip: 'Обновления плагинов',
-    description: 'Проверьте версии, отметьте нужные пакеты и запустите обновление. Проверяются registry-пакеты; Git- и официальные пакеты штатный список версий не охватывает.',
+    description: 'Проверьте версии, отметьте нужные пакеты и запустите обновление. Проверяются registry-пакеты; Git- и официальные пакеты штатный список версий не охватывает. Сам обновлятор себя пропускает; обновляйте его отдельно через менеджер плагинов DSH.',
     ready: 'Нажмите «Проверить», чтобы найти доступные обновления.',
     checking: 'Проверяю установленные плагины…',
     check: 'Проверить',
@@ -186,7 +186,7 @@ const COPY: Record<LocaleCode, Copy> = {
     navLabel: '更新',
     title: '插件更新',
     tooltip: '插件更新',
-    description: '检查版本，选择需要更新的插件，然后开始更新。仅检查 registry 插件；Git 和官方插件不在标准版本目录的检查范围内。',
+    description: '检查版本，选择需要更新的插件，然后开始更新。仅检查 registry 插件；Git 和官方插件不在标准版本目录的检查范围内。此更新器会跳过自身；请在 DSH 插件管理器中单独更新。',
     ready: '点击“检查”以查找可用更新。',
     checking: '正在检查已安装的插件…',
     check: '检查',
@@ -254,8 +254,10 @@ function UpdatesPanel({ ctx }: { ctx: ClientContext }) {
       const listed = await ctx.remote.pluginManager.listBundles()
       if (!listed.ok) throw new Error(listed.error.message)
       const allInstalled = listed.value.filter((bundle: BundleInfo) => bundle.installed && bundle.version)
-      const installed = allInstalled.filter((bundle: BundleInfo) => bundle.update === 'registry')
-      const skipped = allInstalled.length - installed.length
+      // Replacing this bundle can unload its own Client module before a reload is possible.
+      // Keep self-updates out of this panel; update this package separately in the DSH plugin manager.
+      const installed = allInstalled.filter((bundle: BundleInfo) => bundle.update === 'registry' && bundle.name !== ID)
+      const skipped = allInstalled.filter((bundle: BundleInfo) => bundle.update !== 'registry').length
       const found: Update[] = []
       let failed = 0
       for (const bundle of installed) {
@@ -283,7 +285,7 @@ function UpdatesPanel({ ctx }: { ctx: ClientContext }) {
 
   const toggle = (name: string) => setUpdates(rows => rows.map(row => row.name === name ? { ...row, selected: !row.selected } : row))
   const applySelected = async () => {
-    const selected = updates.filter(row => row.selected)
+    const selected = updates.filter(row => row.selected && row.name !== ID)
     if (!selected.length) { setStatus({ kind: 'select' }); return }
     setBusy(true)
     const results: Array<{ name: string; ok: boolean; detail: string }> = []

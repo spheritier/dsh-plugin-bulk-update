@@ -1,6 +1,7 @@
 {
   "meta": {
     "title": "Actualizaciones masivas de plugins",
-    "description": "Comprueba si hay actualizaciones compatibles para los plugins de registry de DSH instalados, elige cuáles aplicar y actualízalos en secuencia."
+    "description": "Abre Actualizaciones en la barra lateral, pulsa Comprobar, revisa los candidatos compatibles de registry y pulsa Actualizar seleccionados. Las actualizaciones nunca se instalan automáticamente; se excluyen los paquetes Git, locales, tarball y oficiales, este plugin se omite a sí mismo y algunos cambios pueden requerir reiniciar DSH.",
+    "detail": "docs/DETAIL.es.md"
   }
 }

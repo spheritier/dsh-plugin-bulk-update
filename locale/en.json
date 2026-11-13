@@ -1,6 +1,7 @@
 {
   "meta": {
-    "title": "Bulk Plugin Updates",
-    "description": "Check installed DSH registry plugins for compatible updates, choose which ones to apply, and update them in sequence."
+    "title": "Bulk plugin updates",
+    "description": "Open Updates in the sidebar, choose Check, review compatible registry-update candidates, then choose Update selected. Updates are never installed automatically; Git, local-path, tarball, and official packages are excluded, this plugin skips itself, and some changes may require restarting DSH.",
+    "detail": "docs/DETAIL.md"
   }
 }
