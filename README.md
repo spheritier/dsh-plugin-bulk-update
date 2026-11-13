@@ -38,6 +38,7 @@ The panel reports how many updates were found, skipped, or could not be checked.
 - Git, local-path, tarball, and official packages are not included in the registry version scan.
 - Checking and applying updates are separate user actions; nothing is installed automatically.
 - Availability depends on the configured registry being reachable and on DSH's plugin manager returning compatible bundle versions.
+- This updater deliberately skips itself; update it separately through the DSH plugin manager so it cannot unload its own UI during replacement.
 - Some package changes may require a DSH restart; this plugin does not restart the application automatically.
 
 ### Compatibility
@@ -92,6 +93,7 @@ dsh plugin --profile web add dsh-plugin-bulk-update
 - Git-пакеты, пакеты из локальных путей, tarball-пакеты и официальные пакеты не входят в registry-проверку версий.
 - Проверка и применение обновлений — отдельные действия пользователя; автоматической установки нет.
 - Доступность обновлений зависит от доступности настроенного registry и от совместимых версий bundle, возвращённых менеджером плагинов DSH.
+- Плагин намеренно пропускает обновление самого себя; обновляйте его отдельно через менеджер плагинов DSH, чтобы замена пакета не выгружала его интерфейс.
 - Для применения некоторых изменений может потребоваться перезапуск DSH; плагин не перезапускает приложение автоматически.
 
 ### Совместимость

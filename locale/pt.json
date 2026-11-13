@@ -1,6 +1,7 @@
 {
   "meta": {
     "title": "Atualizações em lote de plugins",
-    "description": "Verifique atualizações compatíveis para os plugins de registry do DSH instalados, escolha quais aplicar e atualize-os em sequência."
+    "description": "Abra Atualizações na barra lateral, selecione Verificar, confira os candidatos compatíveis de registry e escolha Atualizar selecionados. As atualizações nunca são instaladas automaticamente; pacotes Git, locais, tarball e oficiais são excluídos, este plugin ignora a si próprio e algumas alterações podem exigir reiniciar o DSH.",
+    "detail": "docs/DETAIL.pt.md"
   }
 }
