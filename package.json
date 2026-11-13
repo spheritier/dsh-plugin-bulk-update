@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-bulk-update",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Check installed DSH registry plugins for compatible updates and apply the versions you select.",
   "files": ["cordis.patch.yml", "docs/", "lib/", "locale/", "README.md", "LICENSE"],
   "repository": { "type": "git", "url": "https://github.com/spheritier/dsh-plugin-bulk-update.git" },
