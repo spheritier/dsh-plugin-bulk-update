@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Mises à jour groupées des plugins",
-    "description": "Ouvrez Mises à jour dans la barre latérale, sélectionnez Vérifier, consultez les candidats compatibles aux mises à jour registry, puis choisissez Mettre à jour la sélection. Aucune mise à jour n'est installée automatiquement ; les packages Git, locaux, tarball et officiels sont exclus, ce plugin s'exclut lui-même et certaines modifications peuvent nécessiter un redémarrage de DSH.",
+    "description": "Recherche les mises à jour des plugins compatibles du registre et permet de mettre à jour manuellement ceux que vous choisissez.",
     "detail": "docs/DETAIL.fr.md"
   }
 }

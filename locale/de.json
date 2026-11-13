@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Gebündelte Plugin-Updates",
-    "description": "Öffne Updates in der Seitenleiste, wähle Prüfen, prüfe kompatible Registry-Update-Kandidaten und wähle dann Ausgewählte aktualisieren. Updates werden nie automatisch installiert; Git-, lokale Pfad-, Tarball- und offizielle Pakete sind ausgeschlossen, dieses Plugin überspringt sich selbst und manche Änderungen erfordern einen Neustart von DSH.",
+    "description": "Prüft auf Updates kompatibler Registry-Plugins und lässt dich ausgewählte Plugins manuell aktualisieren.",
     "detail": "docs/DETAIL.de.md"
   }
 }

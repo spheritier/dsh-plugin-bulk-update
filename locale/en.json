@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Bulk plugin updates",
-    "description": "Open Updates in the sidebar, choose Check, review compatible registry-update candidates, then choose Update selected. Updates are never installed automatically; Git, local-path, tarball, and official packages are excluded, this plugin skips itself, and some changes may require restarting DSH.",
+    "description": "Checks for updates to compatible registry plugins and lets you manually update your selections.",
     "detail": "docs/DETAIL.md"
   }
 }
