@@ -1,12 +1,12 @@
 {
   "name": "dsh-plugin-bulk-update",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Check installed DSH registry plugins for compatible updates and apply the versions you select.",
-  "files": ["cordis.patch.yml", "docs/", "lib/", "locale/", "README.md", "LICENSE"],
+  "files": ["assets/", "cordis.patch.yml", "docs/", "lib/", "locale/", "README.md", "LICENSE"],
   "repository": { "type": "git", "url": "https://github.com/spheritier/dsh-plugin-bulk-update.git" },
   "type": "module",
   "main": "lib/index.mjs",
-  "exports": { ".": "./lib/index.mjs", "./client": "./lib/client.js", "./locale/*.json": "./locale/*.json" },
+  "exports": { ".": "./lib/index.mjs", "./client": "./lib/client.js", "./icon": "./assets/icon.svg", "./locale/*.json": "./locale/*.json" },
   "dsh": {
     "bundle": { "patch": "./cordis.patch.yml" },
     "client": { "platform": "web", "inject": ["@deepseek-ai/dsh-api-remotes", "@deepseek-ai/dsh-client-ui-layout", "@deepseek-ai/dsh-client-ui-renderer", "@deepseek-ai/dsh-client-ui-sidebar", "@deepseek-ai/dsh-client-ui-slots"] }

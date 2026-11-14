@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 40 40">
+  <title>Bulk plugin updates</title>
+  <rect width="40" height="40" rx="8" fill="#151c26"/>
+  <g transform="translate(4 4)">
+    <g fill="#35c8ed">
+      <rect x="9" y="9" width="6" height="6" rx="1.5"/>
+      <rect x="17" y="9" width="6" height="6" rx="1.5"/>
+      <rect x="9" y="17" width="6" height="6" rx="1.5"/>
+    </g>
+    <rect x="17" y="17" width="6" height="6" rx="1.5" fill="#778596"/>
+    <path d="M6.808 25.192 A13 13 0 1 1 28.557 12.635" fill="none" stroke="#35c8ed" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M24.8 11.7 L29.1 15.2 L30.8 9.8 Z" fill="#35c8ed"/>
+  </g>
+</svg>
