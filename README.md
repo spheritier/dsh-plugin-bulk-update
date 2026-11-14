@@ -45,7 +45,7 @@ The panel reports how many updates were found, skipped, or could not be checked.
 
 ### Compatibility
 
-Built against the DSH `0.2.2-rc.2` plugin-manager and Client UI APIs. Compatibility with other DSH versions has not been independently verified.
+Declared DSH range: `>=0.2.2-rc.2 <0.3.0-0`. This permits newer releases in the 0.2 line instead of pinning one RC. Build dependencies remain pinned to `0.2.2-rc.2`; source typechecks and host compatibility checks pass with `rc.2` and `rc.3`. Future releases in the range are not individually tested; DSH 0.3 prereleases and later require a new review.
 
 ### Development
 
@@ -100,7 +100,7 @@ dsh plugin --profile web add dsh-plugin-bulk-update
 
 ### Совместимость
 
-Плагин собран с API менеджера плагинов и Client UI DSH `0.2.2-rc.2`. Совместимость с другими версиями DSH отдельно не проверялась.
+Заявленный диапазон DSH: `>=0.2.2-rc.2 <0.3.0-0`. Вместо привязки к одному RC допускаются новые выпуски ветки 0.2. Зависимости сборки закреплены на `0.2.2-rc.2`; проверка типов исходников и штатная проверка совместимости проходят с `rc.2` и `rc.3`. Будущие версии внутри диапазона отдельно не проверены; предварительные версии DSH 0.3 и более новые ветки требуют повторной проверки.
 
 ### Разработка
 
@@ -154,7 +154,7 @@ dsh plugin --profile web add dsh-plugin-bulk-update
 
 ### 兼容性
 
-本插件基于 DSH `0.2.2-rc.2` 的插件管理器及 Client UI API 构建。尚未单独验证与其他 DSH 版本的兼容性。
+声明的 DSH 范围为 `>=0.2.2-rc.2 <0.3.0-0`，允许 0.2 系列后续版本，不再锁定单个 RC。构建依赖仍固定为 `0.2.2-rc.2`；源码类型检查和宿主兼容性检查已在 `rc.2` 与 `rc.3` 上通过。范围内未来版本未逐一测试；DSH 0.3 预发布及后续版本需重新评估。
 
 ### 开发
 
@@ -208,7 +208,7 @@ DSH の UI からプラグインをインストールできる場合は、プラ
 
 ### 互換性
 
-DSH `0.2.2-rc.2` のプラグインマネージャーおよび Client UI API を基にビルドしています。他の DSH バージョンとの互換性は個別に検証していません。
+DSH の宣言範囲は `>=0.2.2-rc.2 <0.3.0-0` です。単一の RC に固定せず、0.2 系の後続版を許可します。ビルド依存は `0.2.2-rc.2` に固定し、ソースの型チェックとホストの互換性判定は `rc.2` と `rc.3` で確認済みです。範囲内の将来版は個別に未検証で、DSH 0.3 のプレリリース以降は再確認が必要です。
 
 ### 開発
 
@@ -262,7 +262,7 @@ El panel informa cuántas actualizaciones se encontraron, se omitieron o no se p
 
 ### Compatibilidad
 
-Compilado con las API del gestor de plugins y de Client UI de DSH `0.2.2-rc.2`. La compatibilidad con otras versiones de DSH no se ha verificado de forma independiente.
+Rango declarado de DSH: `>=0.2.2-rc.2 <0.3.0-0`. Permite versiones posteriores de la rama 0.2 sin fijar un solo RC. Las dependencias de compilación siguen en `0.2.2-rc.2`; la comprobación de tipos y la validación de compatibilidad del host pasan con `rc.2` y `rc.3`. Las versiones futuras no se prueban individualmente; DSH 0.3, incluidas sus versiones preliminares, requiere otra revisión.
 
 ### Desarrollo
 
@@ -316,7 +316,7 @@ Le panneau indique le nombre de mises à jour trouvées, ignorées ou impossible
 
 ### Compatibilité
 
-Construit avec les API du gestionnaire de plugins et de Client UI de DSH `0.2.2-rc.2`. La compatibilité avec d'autres versions de DSH n'a pas été vérifiée indépendamment.
+Plage DSH déclarée : `>=0.2.2-rc.2 <0.3.0-0`. Elle autorise les versions suivantes de la branche 0.2 sans imposer un seul RC. Les dépendances de compilation restent fixées à `0.2.2-rc.2` ; les vérifications de types et de compatibilité de l'hôte passent avec `rc.2` et `rc.3`. Les versions futures ne sont pas testées individuellement ; DSH 0.3, préversions comprises, exige une nouvelle vérification.
 
 ### Développement
 
@@ -370,7 +370,7 @@ Das Panel zeigt die Anzahl der gefundenen, übersprungenen und nicht prüfbaren 
 
 ### Kompatibilität
 
-Erstellt mit den Pluginmanager- und Client-UI-APIs von DSH `0.2.2-rc.2`. Die Kompatibilität mit anderen DSH-Versionen wurde nicht unabhängig überprüft.
+Deklarierter DSH-Bereich: `>=0.2.2-rc.2 <0.3.0-0`. Damit sind neuere Versionen der 0.2-Reihe statt nur eines einzelnen RC erlaubt. Build-Abhängigkeiten bleiben auf `0.2.2-rc.2` fixiert; Typprüfung und Host-Kompatibilitätsprüfung bestehen mit `rc.2` und `rc.3`. Künftige Versionen sind nicht einzeln getestet; DSH 0.3 einschließlich Vorabversionen erfordert eine erneute Prüfung.
 
 ### Entwicklung
 
@@ -424,7 +424,7 @@ O painel informa quantas atualizações foram encontradas, ignoradas ou não pud
 
 ### Compatibilidade
 
-Criado com as APIs do gerenciador de plugins e do Client UI do DSH `0.2.2-rc.2`. A compatibilidade com outras versões do DSH não foi verificada de forma independente.
+Intervalo declarado do DSH: `>=0.2.2-rc.2 <0.3.0-0`. Permite versões posteriores da série 0.2 sem fixar um único RC. As dependências de compilação permanecem em `0.2.2-rc.2`; a verificação de tipos e a validação de compatibilidade do host passam com `rc.2` e `rc.3`. Versões futuras não foram testadas individualmente; DSH 0.3, incluindo pré-lançamentos, exige nova revisão.
 
 ### Desenvolvimento
 
