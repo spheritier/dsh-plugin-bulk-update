@@ -15,6 +15,9 @@ A DeepSeek Harness sidebar plugin for checking installed registry plugins for up
 - Review candidates in one list. Candidates are selected by default; uncheck any you want to skip.
 - Apply selected updates sequentially through DSH's plugin manager.
 - Continue with the remaining selections if one update fails; failed items remain in the list.
+- Show real check/update progress with completed and total counts and the current package name; candidates appear as checks finish.
+- Scroll the candidate list independently when it contains more than 10 plugins.
+- Show per-plugin failure reasons, available package-manager diagnostics and log paths, plus restart and restoration information.
 - Localized interface and plugin description for English, Simplified Chinese, Japanese, Spanish, French, German, Russian, and Portuguese. Other locale variants use their language's translation when available (for example, `zh-CN` uses `zh`); unsupported languages fall back to English.
 
 ### Install
@@ -70,6 +73,9 @@ pnpm run build
 - Показывает кандидаты в одном списке. По умолчанию они отмечены; снимите отметку с тех, которые обновлять не нужно.
 - Последовательно применяет выбранные обновления через менеджер плагинов DSH.
 - При ошибке обновления одного пакета продолжает обработку остальных; неудачные элементы остаются в списке.
+- Показывает прогресс проверки и обновления: сколько пакетов обработано, сколько всего и какой проверяется сейчас. Найденные обновления появляются по мере проверки.
+- Добавляет отдельную прокрутку списка, если в нём больше 10 плагинов.
+- Показывает причину ошибки каждого плагина, доступную диагностику менеджера пакетов, путь к журналу и сведения о восстановлении; отдельно сообщает о необходимости перезапуска.
 - Интерфейс и подпись плагина локализованы на английский, упрощённый китайский, японский, испанский, французский, немецкий, русский и португальский. Для неподдерживаемых языков используется английский.
 
 ### Установка
