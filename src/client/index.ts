@@ -1,4 +1,6 @@
 import React from 'react'
+import { failureDetail } from './diagnostics'
+import { panelCopyFor } from './panel-copy'
 import type { Context as ClientContext } from '@deepseek-ai/cordis'
 // These imports activate the generated client-side Remote and plugin-manager type faces.
 import type {} from '@deepseek-ai/dsh-api-remotes/client'
@@ -17,6 +19,9 @@ type Update = {
   registry: string | null
   selected: boolean
 }
+
+type Progress = { phase: 'checking' | 'updating'; completed: number; total: number; current?: string }
+type Problem = { name: string; stage: 'check' | 'update'; detail: string }
 
 type Status =
   | { kind: 'ready' }
@@ -255,99 +260,159 @@ function Icon(props: { size?: number; active?: boolean; ctx: ClientContext }) {
   )
 }
 
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error)
-}
-
 function UpdatesPanel({ ctx }: { ctx: ClientContext }) {
-  const copy = copyFor(useActiveLocale(ctx))
+  const locale = useActiveLocale(ctx)
+  const copy = copyFor(locale)
+  const extra = panelCopyFor(locale)
   const [updates, setUpdates] = React.useState<Update[]>([])
   const [busy, setBusy] = React.useState(false)
   const [status, setStatus] = React.useState<Status>({ kind: 'ready' })
+  const [progress, setProgress] = React.useState<Progress | null>(null)
+  const [problems, setProblems] = React.useState<Problem[]>([])
+  const [notices, setNotices] = React.useState<string[]>([])
+  // Protect against two clicks before React has committed the disabled state.
+  const running = React.useRef(false)
 
   const check = async () => {
+    if (running.current) return
+    running.current = true
     setBusy(true)
+    setUpdates([])
+    setProblems([])
+    setNotices([])
+    setProgress(null)
     setStatus({ kind: 'checking' })
     try {
       const listed = await ctx.remote.pluginManager.listBundles()
-      if (!listed.ok) throw new Error(listed.error.message)
+      if (!listed.ok) throw listed.error
       const allInstalled = listed.value.filter((bundle: BundleInfo) => bundle.installed && bundle.version)
-      // Replacing this bundle can unload its own Client module before a reload is possible.
-      // Keep self-updates out of this panel; update this package separately in the DSH plugin manager.
+      // Self-updates would unload this Client module. Use DSH's own manager for this package.
       const installed = allInstalled.filter((bundle: BundleInfo) => bundle.update === 'registry' && bundle.name !== ID)
       const skipped = allInstalled.filter((bundle: BundleInfo) => bundle.update !== 'registry').length
       const found: Update[] = []
       let failed = 0
-      for (const bundle of installed) {
-        const answer = await ctx.remote.pluginManager.listVersions(bundle.name, {})
-        if (!answer.ok || answer.value.status !== 'listed') { failed++; continue }
-        const candidate = answer.value.versions.find((version: PluginVersion) => version.bundle && !version.incompatible && !version.deprecated)
-        if (candidate) found.push({
-          name: bundle.name,
-          currentVersion: answer.value.installed,
-          version: candidate.version,
-          registry: answer.value.registry,
-          selected: true,
-        })
+      setProgress({ phase: 'checking', completed: 0, total: installed.length })
+      for (const [index, bundle] of installed.entries()) {
+        setProgress({ phase: 'checking', completed: index, total: installed.length, current: bundle.name })
+        try {
+          const answer = await ctx.remote.pluginManager.listVersions(bundle.name, {})
+          if (!answer.ok) throw answer.error
+          if (answer.value.status !== 'listed') throw answer.value
+          const candidate = answer.value.versions.find((version: PluginVersion) => version.bundle && !version.incompatible && !version.deprecated)
+          if (candidate) {
+            found.push({ name: bundle.name, currentVersion: answer.value.installed,
+              version: candidate.version, registry: answer.value.registry, selected: true })
+            // Publish candidates as they arrive, but keep update controls disabled until checking finishes.
+            setUpdates([...found])
+          }
+        } catch (error) {
+          failed++
+          const detail = failureDetail(error, extra.checkFailure)
+          setProblems(rows => [...rows, { name: bundle.name, stage: 'check', detail }])
+        } finally {
+          setProgress({ phase: 'checking', completed: index + 1, total: installed.length })
+        }
       }
-      setUpdates(found)
       setStatus(found.length
         ? { kind: 'found', count: found.length, skipped, failed }
         : { kind: 'none', skipped, failed })
     } catch (error) {
-      setStatus({ kind: 'check-error', error: errorMessage(error) })
+      setStatus({ kind: 'check-error', error: failureDetail(error, extra.checkFailure) })
     } finally {
+      running.current = false
       setBusy(false)
     }
   }
 
   const toggle = (name: string) => setUpdates(rows => rows.map(row => row.name === name ? { ...row, selected: !row.selected } : row))
   const applySelected = async () => {
+    if (running.current) return
     const selected = updates.filter(row => row.selected && row.name !== ID)
     if (!selected.length) { setStatus({ kind: 'select' }); return }
+    running.current = true
     setBusy(true)
-    const results: Array<{ name: string; ok: boolean; detail: string }> = []
+    setProblems(rows => rows.filter(row => row.stage !== 'update' || !selected.some(item => item.name === row.name)))
+    let succeeded = 0
+    let failed = 0
     try {
-      for (const item of selected) {
+      for (const [index, item] of selected.entries()) {
+        setProgress({ phase: 'updating', completed: index, total: selected.length, current: item.name })
         setStatus({ kind: 'updating', name: item.name, version: item.version })
         try {
           const response = await ctx.remote.pluginManager.updateBundle(item.name, item.version, { registry: item.registry })
-          if (!response.ok) {
-            results.push({ name: item.name, ok: false, detail: response.error.message })
-            continue
+          if (!response.ok) throw response.error
+          const { result, step, restore } = response.value
+          const ok = step === 'install' && ['applied', 'restart-required', 'overridden'].includes(result.application)
+          if (!ok) {
+            let detail = `step: ${step}\n${failureDetail(result, extra.updateFailure)}`
+            if (restore) detail += `\n${extra.restoreLabel}:\n${failureDetail(restore, extra.updateFailure)}`
+            throw new Error(detail)
           }
-          const result = response.value.result
-          const ok = result.application === 'applied' || result.application === 'restart-required' || result.application === 'overridden'
-          results.push({ name: item.name, ok, detail: ok ? result.application : result.error?.code ?? 'update failed' })
+          succeeded++
+          setUpdates(rows => rows.filter(row => row.name !== item.name))
+          if (result.application === 'restart-required') setNotices(rows => [...rows, `${item.name}: ${extra.restartRequired}`])
+          if (result.application === 'overridden') setNotices(rows => [...rows, `${item.name}: ${extra.overridden}`])
+          if (result.warnings?.length) setNotices(rows => [...rows, `${item.name}: ${failureDetail(result.warnings.join('\n'), '')}`])
         } catch (error) {
-          results.push({ name: item.name, ok: false, detail: errorMessage(error) })
+          failed++
+          const detail = failureDetail(error, extra.updateFailure)
+          setProblems(rows => [...rows, { name: item.name, stage: 'update', detail }])
+        } finally {
+          setProgress({ phase: 'updating', completed: index + 1, total: selected.length })
         }
       }
-      const succeededNames = new Set(results.filter(item => item.ok).map(item => item.name))
-      const succeeded = succeededNames.size
-      const failed = results.length - succeeded
       setStatus({ kind: 'updated', succeeded, failed })
-      setUpdates(rows => rows.filter(row => !succeededNames.has(row.name)))
     } catch (error) {
-      setStatus({ kind: 'update-error', error: errorMessage(error) })
+      setStatus({ kind: 'update-error', error: failureDetail(error, extra.updateFailure) })
     } finally {
+      running.current = false
       setBusy(false)
     }
   }
 
-  return React.createElement('section', { style: { padding: 24, maxWidth: 760, margin: '0 auto', color: 'var(--text-primary, inherit)' } },
+  const progressText = progress
+    ? (progress.phase === 'checking' ? extra.checkProgress : extra.updateProgress)(progress.completed, progress.total) : copy.checking
+  const scrollStyle: React.CSSProperties = updates.length > 10
+    ? { maxHeight: 'min(55vh, 480px)', overflowY: 'scroll', scrollbarGutter: 'stable', overscrollBehavior: 'contain' } : {}
+  const diagnosticStyle: React.CSSProperties = { whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', fontFamily: 'inherit', fontSize: '0.875em', margin: '6px 0 0' }
+
+  return React.createElement('section', { style: { padding: 24, maxWidth: 760, margin: '0 auto', color: 'var(--text-primary, inherit)', boxSizing: 'border-box', height: '100%', overflowY: 'auto' } },
     React.createElement('h2', { style: { margin: '0 0 8px' } }, copy.title),
     React.createElement('p', { style: { opacity: 0.75 } }, copy.description),
-    React.createElement('div', { style: { display: 'flex', gap: 8, margin: '16px 0' } },
+    React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 8, margin: '16px 0' } },
       React.createElement('button', { type: 'button', disabled: busy, onClick: check }, busy ? copy.wait : copy.check),
       React.createElement('button', { type: 'button', disabled: busy || !updates.some(row => row.selected), onClick: applySelected }, copy.updateSelected),
     ),
-    React.createElement('p', { role: 'status', 'aria-live': 'polite' }, statusText(status, copy)),
-    ...updates.map(row => React.createElement('label', { key: row.name, style: { display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderBottom: '1px solid var(--border-subtle, #8884)' } },
+    React.createElement('p', { role: 'status', 'aria-live': 'polite', style: { overflowWrap: 'anywhere', whiteSpace: 'pre-wrap' } }, statusText(status, copy)),
+    (busy || (progress && progress.total > 0)) && React.createElement('div', { 'data-testid': 'operation-progress', style: { marginBottom: 16 } },
+      React.createElement('div', { role: 'status', 'aria-live': 'polite', style: { overflowWrap: 'anywhere' } },
+        progressText, progress?.current ? ` — ${progress.current}` : ''),
+      React.createElement('progress', {
+        max: progress?.total || 1,
+        value: progress ? progress.completed : undefined,
+        'aria-label': progressText,
+        style: { width: '100%', height: 12, accentColor: 'var(--accent-primary, #178cb6)' },
+      }),
+    ),
+    React.createElement('div', {
+      role: 'region', 'aria-label': extra.listLabel, 'aria-busy': busy,
+      tabIndex: updates.length > 10 ? 0 : undefined,
+      'data-testid': 'updates-list', style: scrollStyle,
+    }, ...updates.map(row => React.createElement('label', { key: row.name, style: { display: 'flex', alignItems: 'center', gap: 10, minHeight: 48, boxSizing: 'border-box', padding: '10px 12px', borderBottom: '1px solid var(--border-subtle, #8884)' } },
       React.createElement('input', { type: 'checkbox', checked: row.selected, disabled: busy, onChange: () => toggle(row.name) }),
-      React.createElement('span', { style: { flex: 1 } }, row.name),
-      React.createElement('code', null, `${row.currentVersion} → ${row.version}`),
-    )),
+      React.createElement('span', { style: { flex: 1, minWidth: 0, overflowWrap: 'anywhere' } }, row.name),
+      React.createElement('code', { style: { overflowWrap: 'anywhere', textAlign: 'right' } }, `${row.currentVersion} → ${row.version}`),
+    ))),
+    ...notices.map((notice, index) => React.createElement('p', { key: `notice-${index}`, style: { overflowWrap: 'anywhere' } }, notice)),
+    problems.length > 0 && React.createElement('section', { 'data-testid': 'error-details', style: { marginTop: 20 } },
+      React.createElement('h3', null, extra.errorsTitle),
+      React.createElement('div', { role: 'region', 'aria-label': extra.errorsTitle, tabIndex: problems.length > 10 ? 0 : undefined, style: problems.length > 10 ? { maxHeight: 480, overflowY: 'auto' } : {} },
+        ...problems.map(problem => React.createElement('div', { key: `${problem.stage}-${problem.name}`, style: { padding: '10px 12px', marginBottom: 8, borderLeft: '3px solid var(--text-danger, #c34b4b)' } },
+          React.createElement('strong', { style: { overflowWrap: 'anywhere' } }, problem.name),
+          React.createElement('pre', { style: diagnosticStyle }, problem.detail),
+        )),
+      ),
+    ),
   )
 }
 
