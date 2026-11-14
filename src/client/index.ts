@@ -230,11 +230,29 @@ function useActiveLocale(ctx: ClientContext): string {
 
 function Icon(props: { size?: number; active?: boolean; ctx: ClientContext }) {
   const copy = copyFor(useActiveLocale(props.ctx))
-  return React.createElement('span', {
-    title: copy.tooltip,
+  return React.createElement('svg', {
+    xmlns: 'http://www.w3.org/2000/svg',
+    viewBox: '0 0 32 32',
+    width: props.size ?? 22,
+    height: props.size ?? 22,
+    role: 'img',
     'aria-label': copy.tooltip,
-    style: { display: 'inline-grid', placeItems: 'center', width: props.size ?? 22, height: props.size ?? 22, fontSize: 19, opacity: props.active ? 1 : 0.82 },
-  }, '↻')
+    focusable: false,
+    style: { display: 'block', flexShrink: 0, opacity: props.active ? 1 : 0.82 },
+  },
+    React.createElement('title', null, copy.tooltip),
+    React.createElement('g', { fill: 'currentColor' },
+      React.createElement('rect', { x: 9, y: 9, width: 6, height: 6, rx: 1.5 }),
+      React.createElement('rect', { x: 17, y: 9, width: 6, height: 6, rx: 1.5 }),
+      React.createElement('rect', { x: 9, y: 17, width: 6, height: 6, rx: 1.5 }),
+      React.createElement('rect', { x: 17, y: 17, width: 6, height: 6, rx: 1.5, opacity: 0.4 }),
+    ),
+    React.createElement('path', {
+      d: 'M6.808 25.192 A13 13 0 1 1 28.557 12.635',
+      fill: 'none', stroke: 'currentColor', strokeWidth: 2.4, strokeLinecap: 'round',
+    }),
+    React.createElement('path', { d: 'M24.8 11.7 L29.1 15.2 L30.8 9.8 Z', fill: 'currentColor' }),
+  )
 }
 
 function errorMessage(error: unknown): string {

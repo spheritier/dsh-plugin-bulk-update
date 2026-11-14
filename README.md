@@ -1,5 +1,7 @@
 # DSH Plugin Bulk Update
 
+<p align="center"><img src="https://raw.githubusercontent.com/spheritier/dsh-plugin-bulk-update/main/assets/icon.png" width="128" height="128" alt="Bulk plugin updates: a module grid with an update arrow" /></p>
+
 [English](#english) · [Русский](#русский) · [简体中文](#简体中文) · [日本語](#日本語) · [Español](#español) · [Français](#français) · [Deutsch](#deutsch) · [Português](#português)
 
 <a id="english"></a>
